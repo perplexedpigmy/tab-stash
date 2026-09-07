@@ -186,10 +186,9 @@ class MockBookmarks implements BM.Static {
     this.by_id.set(bm.id, bm);
 
     // NOTE: The way we splice bookmarks into (and out of) the parent node is
-    // very deliberate and intended to mimic Firefox's implementation for doing
-    // the same.  This is so the mock has consistent/bug-for-bug compatibility
-    // with how Firefox behaves when there are inconsistent indexes in the
-    // bookmarks DB.
+    // very deliberate and intended to be compatible with browser bookmarks
+    // behavior. This ensures the mock has consistent behavior even with
+    // inconsistent indexes in the bookmarks DB.
     parent.children.splice(index, 0, bm);
     for (let i = index + 1; i < parent.children.length; ++i) {
       parent.children[i].index++;
@@ -214,24 +213,18 @@ class MockBookmarks implements BM.Static {
 
     // We search for oldIndex this way since the bookmarks DB might be "corrupt"
     // (i.e. node.index is unreliable), yet we still want move() to find and
-    // move the correct node in oldParent.children.  In real Firefox, this makes
+    // move the correct node in oldParent.children.  In real browsers, this makes
     // sense, because bookmarks are always looked up by ID and their index and
-    // parentId are stored directly in the places DB, so even a corrupt Firefox
-    // DB will behave similarly to this.
+    // parentId are stored directly in the places DB, so even a corrupt database
+    // will behave similarly to this.
     const oldIndex = oldParent.children.findIndex(n => n === node);
     let newIndex = destination.index ?? newParent.children.length;
     newIndex = Math.min(newIndex, newParent.children.length);
 
-    // Chrome has add-then-remove behavior, while Firefox has
-    // remove-then-add behavior.  We have to pick one consistently (so
-    // bookmarks land in predictable places), so we just go with Firefox's
-    // behavior.
-    //
     // NOTE: The way we splice bookmarks into (and out of) the parent node is
-    // very deliberate and intended to mimic Firefox's implementation for doing
-    // the same.  This is so the mock has consistent/bug-for-bug compatibility
-    // with how Firefox behaves when there are inconsistent indexes in the
-    // bookmarks DB.
+    // very deliberate and intended to be compatible with browser bookmarks
+    // behavior. This ensures the mock has consistent behavior even with
+    // inconsistent indexes in the bookmarks DB.
 
     oldParent.children.splice(oldIndex, 1);
     for (let i = oldIndex; i < oldParent.children.length; ++i) {
@@ -284,10 +277,9 @@ class MockBookmarks implements BM.Static {
     }
 
     // NOTE: The way we splice bookmarks into (and out of) the parent node is
-    // very deliberate and intended to mimic Firefox's implementation for doing
-    // the same.  This is so the mock has consistent/bug-for-bug compatibility
-    // with how Firefox behaves when there are inconsistent indexes in the
-    // bookmarks DB.
+    // very deliberate and intended to be compatible with browser bookmarks
+    // behavior. This ensures the mock has consistent behavior even with
+    // inconsistent indexes in the bookmarks DB.
     const parent = this._getFolder(node.parentId!);
     parent.children.splice(node.index, 1);
     for (let i = node.index; i < parent.children.length; ++i) {
@@ -307,10 +299,9 @@ class MockBookmarks implements BM.Static {
     const node = this._getFolder(id);
 
     // NOTE: The way we splice bookmarks into (and out of) the parent node is
-    // very deliberate and intended to mimic Firefox's implementation for doing
-    // the same.  This is so the mock has consistent/bug-for-bug compatibility
-    // with how Firefox behaves when there are inconsistent indexes in the
-    // bookmarks DB.
+    // very deliberate and intended to be compatible with browser bookmarks
+    // behavior. This ensures the mock has consistent behavior even with
+    // inconsistent indexes in the bookmarks DB.
     const parent = this._getFolder(node.parentId!);
     parent.children.splice(node.index, 1);
     for (let i = node.index; i < parent.children.length; ++i) {

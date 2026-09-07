@@ -57,9 +57,9 @@
           {{ $t("and") }}
           <select id="browser_action_show" v-model="sync.browser_action_show">
             <option
-              v-if="model.hasSidebar()"
-              :disabled="!model.canBrowserActionShow('sidebar')"
-              value="sidebar"
+              v-if="model.hasSidePanel()"
+              :disabled="!model.canBrowserActionShow('sidepanel')"
+              value="sidepanel"
             >
               {{ $t("showInSidebar") }}
             </option>
@@ -86,14 +86,14 @@
     <section>
       <label>{{ $t("whenStashingFromMenu") }}</label>
       <ul>
-        <li v-if="model.hasSidebar()">
-          <label for="open_stash_in_sidebar">
+        <li v-if="model.hasSidePanel()">
+          <label for="open_stash_in_sidepanel">
             <input
               type="radio"
               name="open_stash_in"
-              id="open_stash_in_sidebar"
+              id="open_stash_in_sidepanel"
               v-model="sync.open_stash_in"
-              value="sidebar"
+              value="sidepanel"
             />
             {{ $t("showStashInSidebar") }}
           </label>

@@ -358,6 +358,9 @@ export class Model {
 
   /** Checks if the tab was hidden by us or by some other extension. */
   async wasTabHiddenByUs(tab: Tab): Promise<boolean> {
+    // getTabValue() is available in some browsers; others never hide tabs.
+    if (!browser.sessions?.getTabValue) return false;
+
     const res = await browser.sessions.getTabValue(
       tab.id,
       SK_HIDDEN_BY_TAB_STASH,
@@ -438,16 +441,21 @@ export class Model {
     active?: boolean;
   }): Promise<Tab> {
     const flat_pos = _flatPositionFor(options.atParent, options.atIndex);
-    const create_tab = {
+    const create_tab: any = {
       url: options.url !== "" ? options.url : undefined,
       title: options.title,
-      cookieStoreId: options.cookieStoreId,
       pinned: options.pinned,
       discarded: options.discarded,
       active: options.active,
       windowId: flat_pos.parent.id,
       index: flat_pos.index,
     };
+    // cookieStoreId is a Firefox-only property on tabs.create(); Chrome's
+    // schema rejects it even when its value is undefined, so only include it
+    // when the caller actually asked for a specific store.
+    if (options.cookieStoreId !== undefined) {
+      create_tab.cookieStoreId = options.cookieStoreId;
+    }
 
     if (
       !browser.tabs.hide ||
@@ -457,9 +465,6 @@ export class Model {
       // This is Chrome; it doesn't support discarded tabs, so we can only load
       // so many at once.  This is a little awkward because to the user, it will
       // look like there is a big delay in opening tabs.
-      //
-      // (It could also be Firefox, which doesn't support creating discarded
-      // `about:` tabs.)
       delete create_tab.discarded;
       delete create_tab.title;
       return await this._loading_queue.run(async () => {
@@ -478,7 +483,7 @@ export class Model {
       });
     }
 
-    // This is Firefox; it DOES support discarded tabs. We can be fancier and
+    // Firefox supports discarded tabs. We can be fancier and
     // create the discarded tab immediately, and then try to load it in the
     // background only if it's "safe" (i.e. the user's machine can handle it).
     create_tab.discarded = true;
@@ -526,7 +531,7 @@ export class Model {
     const flat_pos = _flatPositionFor(toParent, toIndex);
 
     // If we are moving the group forward in the same window it was in before,
-    // we have to adjust flat_pos, because Firefox removes then inserts the
+    // we have to adjust flat_pos, because some browsers remove then insert the
     // group.
     if (toParent === group.position?.parent && toIndex > group.position.index) {
       flat_pos.index -= group.children.length;
@@ -604,7 +609,7 @@ export class Model {
   ): Promise<void> {
     // This method mainly exists to provide consistent behavior between
     // bookmarks.move() and tabs.move(). Unlike browser.bookmarks.move(),
-    // browser.tabs.move() behaves the same on both Firefox and Chrome.
+    // browser.tabs.move() behaves the same across browsers.
     const pos = tab.flattenedPosition;
     if (pos?.parent === toWindow && toIndex > pos.index) toIndex--;
 
@@ -628,7 +633,7 @@ export class Model {
   /** Hides the specified tabs, optionally discarding them (to free up memory).
    * If the browser does not support hiding tabs, closes them instead.
    *
-   * Firefox refuses to hide pinned tabs (browser.tabs.hide() silently skips
+   * Some browsers refuse to hide pinned tabs (browser.tabs.hide() silently skips
    * them), so pinned tabs are unpinned first, then hidden like any other
    * tab. */
   async hide(tabs: Tab[], discard?: "discard"): Promise<void> {
@@ -924,7 +929,7 @@ export class Model {
       });
     }
 
-    // If a tab is closed and then a new one opened in quick succession, Firefox
+    // If a tab is closed and then a new one opened in quick succession, some browsers
     // will sometimes send us a tab-creation event with an index that still
     // assumes the prior tab is open--that is, the index will be one larger than
     // what it should be. If the new tab is opened in the rightmost position
@@ -944,12 +949,12 @@ export class Model {
   whenTabUpdated(id: number, info: Tabs.OnUpdatedChangeInfoType) {
     trace("event tabUpdated", id, info.url, info);
     const t = this.tab(id as TabID);
-    /* c8 ignore start -- compensation for firefox inconsistency */
+    /* c8 ignore start -- compensation for browser inconsistency */
     if (!t) {
-      // Firefox sometimes sends onUpdated events for a tab after it has been
+      // Some browsers sometimes send onUpdated events for a tab after it has been
       // closed.  Worse, the usual technique of reloading the model breaks
       // things even more, because the closed tab hasn't been cleared out of
-      // Firefox's internal state at the time we receive the onUpdated event, so
+      // the browser's internal state at the time we receive the onUpdated event, so
       // browser.tabs.query() still returns the closed tab.  We work around this
       // by simply ignoring onUpdated events for tabs we don't recognize.
       // https://github.com/josh-berry/tab-stash/issues/321
@@ -1002,16 +1007,16 @@ export class Model {
   whenTabMoved(tabId: number, info: {windowId: number; toIndex: number}) {
     trace("event tabMoved", tabId, info);
     const t = this.tab(tabId as TabID);
-    /* c8 ignore next 4 -- compensation for firefox inconsistency */
+    /* c8 ignore next 4 -- compensation for browser inconsistency */
     if (!t) {
       console.warn(`Got move event for unknown tab ${tabId}`);
       return;
     }
 
-    /* c8 ignore start -- compensation for firefox inconsistency */
+    /* c8 ignore start -- compensation for browser inconsistency */
     let newWindow = this.window(info.windowId as WindowID);
     if (!newWindow) {
-      // Sometimes Firefox sends tabAttached (aka tabMoved) events before
+      // Some browsers send tabAttached (aka tabMoved) events before
       // (or instead of) the window-creation event itself.  This usually
       // happens when tearing a tab off of an existing window to make a
       // new window.  Handle this by synthesizing a new window.
@@ -1034,7 +1039,7 @@ export class Model {
   whenTabReplaced(newId: number, oldId: number) {
     trace("event tabReplaced", oldId, "=>", newId);
     const t = this.tab(oldId as TabID);
-    /* c8 ignore next 4 -- compensation for firefox inconsistency */
+    /* c8 ignore next 4 -- compensation for browser inconsistency */
     if (!t) {
       console.warn(`Got replace event for unknown tab ${oldId} (-> ${newId})`);
       return;
@@ -1048,7 +1053,7 @@ export class Model {
   whenTabActivated(info: Tabs.OnActivatedActiveInfoType) {
     trace("event tabActivated", info.tabId, info);
     const tab = this.tab(info.tabId as TabID);
-    /* c8 ignore next 4 -- compensation for firefox inconsistency */
+    /* c8 ignore next 4 -- compensation for browser inconsistency */
     if (!tab) {
       console.warn(`Got activated event for unknown tab ${info.tabId}`);
       return;
@@ -1065,7 +1070,7 @@ export class Model {
   whenTabsHighlighted(info: Tabs.OnHighlightedHighlightInfoType) {
     trace("event tabsHighlighted", info);
     const win = this.window(info.windowId as WindowID);
-    /* c8 ignore next 4 -- compensation for firefox inconsistency */
+    /* c8 ignore next 4 -- compensation for browser inconsistency */
     if (!win) {
       console.log(`Got highlighted event for unknown window ${info.windowId}`);
       return;
@@ -1154,7 +1159,7 @@ export class Model {
     } else {
       // newGroupId is not provided, meaning the group membership may or may not
       // be changing. The heuristics for guessing at this are stupidly
-      // complicated, because Firefox isn't always consistent about sending us
+      // complicated, because some browsers aren't always consistent about sending us
       // tabs.onUpdated events when the group changes--so there are a few
       // corner-case situations where we just have to guess.
 
@@ -1164,10 +1169,10 @@ export class Model {
 
       // However, if we're moving between windows, things get more complicated:
       if (newFlattenedPosition?.parent !== oldWindow) {
-        // Firefox will not send a tabs.onUpdated event if the tab is being
-        // moved into a group; it assumes the extension already knows the group
-        // is there and so doesn't tell us the tab's groupId is changing.
-        // However, it WILL send one if a tab's being moved to just outside the
+        // Some browsers will not send a tabs.onUpdated event if the tab is being
+        // moved into a group; they assume the extension already knows the group
+        // is there and so don't tell us the tab's groupId is changing.
+        // However, they WILL send one if a tab's being moved to just outside the
         // beginning of the group, to explicitly tell us the tab is NOT in the
         // adjacent group.
         //

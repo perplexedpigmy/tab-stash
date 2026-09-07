@@ -129,9 +129,9 @@ function close() {
   trace("close");
 
   // Move the focus out of the menu before we try to close it,
-  // otherwise Firefox gets confused about where the focus is and will
+  // otherwise some browsers get confused about where the focus is and will
   // forget to turn off :focus-within attributes on some parent
-  // elements... (this seems to be a Firefox bug)
+  // elements... (this seems to be a browser bug)
   if ($details.value) $details.value.focus();
 
   isOpen.value = false;

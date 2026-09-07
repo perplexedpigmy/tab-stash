@@ -130,8 +130,7 @@ export function urlToOpen(urlstr: string): OpenableURL {
       case "chrome:":
         // Chromium allows use of chrome:// URLs; Firefox doesn't (since
         // they're internal browser URLs). getBrowserInfo is a handy way
-        // of checking if we're on Firefox (where it's present) or
-        // Chromium (where it isn't).
+        // of checking which browser we're on.
         if (!browser.runtime.getBrowserInfo) break;
         return redirUrl(urlstr);
 

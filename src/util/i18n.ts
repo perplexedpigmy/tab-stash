@@ -42,7 +42,7 @@ export function $ts(
         ? "one"
         : "other";
 
-    const val = browser.i18n.getMessage(`${keyBase}.${category}`, [
+    const val = browser.i18n.getMessage(`${keyBase}_${category}`, [
       n.toString(),
       ...substitutions,
     ]);

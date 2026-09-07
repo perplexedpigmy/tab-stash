@@ -72,7 +72,7 @@ dive into the code:
      pretty
 
 3. Learn how [extensions for
-   Firefox](https://extensionworkshop.com/extension-basics/) are put together.
+   Chrome](https://developer.chrome.com/docs/extensions/mv3/) are put together.
 
 4. Learn about the major libraries and frameworks used in Tab Stash:
    - [The WebExtension APIs](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API)
@@ -84,44 +84,43 @@ dive into the code:
 
 ### Getting Started
 
-Here's how to get a build with your changes loaded into Firefox so you can try
+Here's how to get a build with your changes loaded into Chrome so you can try
 them out:
 
 1. Clone Tab Stash's source code from
-   [GitHub](https://github.com/josh-berry/tab-stash/).
+   [GitHub](https://github.com/perplexedpigmy/tab-stash/).
 
 2. Follow the instructions in the [README] to build Tab Stash for development.
    You should see that all the tests are passing.
 
-3. Load your build into Firefox:
-   1. Go to `about:debugging` and click on "This Firefox".
+3. Load your build into Chrome:
+   1. Go to `chrome://extensions/` and enable "Developer mode".
+   2. Click "Load unpacked" and choose the `dist` directory in Tab Stash's
+      build output.
 
-   2. Click "Load Temporary Addon..." and choose the `manifest.json` file in Tab
-      Stash's `dist` directory.
+4. The Tab Stash side panel and toolbar button should appear.
 
-   3. The Tab Stash sidebar and toolbar button should appear.
-
-4. Make your changes:
+5. Make your changes:
    1. Use your favorite editor (e.g. [Visual Studio Code]) to make your changes.
 
-   2. Rebuild Tab Stash and run the unit tests (just run `make`). Be sure the
+   2. Rebuild Tab Stash and run the unit tests (just run `npm run build:dev`). Be sure the
       tests pass before proceeding.
 
-   3. Use `about:debugging` to reload the extension, and try out your changes.
-      You can also use `about:debugging` to inspect and debug the various
+   3. Use `chrome://extensions/` to reload the extension, and try out your changes.
+      You can also use `chrome://extensions/` to inspect and debug the various
       components of Tab Stash (background page, UI pages, etc.).
 
-   4. Repeat until you're satisfied with your changes.
+6. Repeat until you're satisfied with your changes.
 
-5. Once you're happy with your changes, push them to a branch on GitHub, and
+7. Once you're happy with your changes, push them to a branch on GitHub, and
    open a Pull Request. (See the introduction for advice on how to submit a
    good PR.)
 
-6. I'll review your change and work with you to address any issues. Then,
+8. I'll review your change and work with you to address any issues. Then,
    if/when everything looks good, I'll merge it and it will become part of the
    next Tab Stash release!
 
-[readme]: https://github.com/josh-berry/tab-stash/blob/master/README.md
+[readme]: https://github.com/perplexedpigmy/tab-stash/blob/master/README.md
 [visual studio code]: https://code.visualstudio.com/
 
 ### Learning Your Way Around the Code
@@ -280,7 +279,7 @@ rarely have to think about formatting.
 ### Editing Icons
 
 [Inkscape](https://inkscape.org/en/) is the recommended tool. Please be sure to
-follow the Firefox [Photon Design Guide](https://design.firefox.com/photon/).
+follow the [Chrome Extension Icon Guidelines](https://developer.chrome.com/docs/extensions/mv3/icons/).
 
 As noted above, icons must be monochromatic or the post-processing done to
 convert icons for light/dark themes will not work well. The post-processing is

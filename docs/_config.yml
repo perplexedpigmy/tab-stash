@@ -1,5 +1,5 @@
 title: Tab Stash
-description: Clear your tabs, clear your mind.  Only for Firefox.
+description: Clear your tabs, clear your mind.
 theme: jekyll-theme-minimal
 include:
   - index.md

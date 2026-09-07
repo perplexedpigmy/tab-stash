@@ -19,11 +19,13 @@ export default class Service<K extends Proto.Key, V extends Proto.Value>
     db_name: string,
     store_name: string,
   ): Promise<Service<K, V>> {
-    // Magical incantation to make sure the browser doesn't spontaneously
-    // delete our store.
-    if (!(await navigator.storage.persisted())) {
-      await navigator.storage.persist();
-    }
+    // NOTE: Firefox requested persistent storage here via
+    // navigator.storage.persist().  That API is not exposed in Chrome's MV3
+    // service worker (it isn't available in workers at all), and the
+    // `unlimitedStorage` permission already exempts the extension from both
+    // quota restrictions and eviction.  We therefore re-issue the persistence
+    // request from extension pages instead (see util/persistent-storage.ts),
+    // where the API is available.
 
     return new Service(
       await openDB(db_name, 1, {

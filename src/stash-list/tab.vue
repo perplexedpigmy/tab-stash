@@ -13,7 +13,6 @@
       'no-match': !filterInfo.isMatching,
     }"
     :title="tab.title"
-    :data-container-color="containerColor"
   >
     <item-icon
       :class="{
@@ -69,7 +68,6 @@ import {altKeyName, bgKeyName, required, $t} from "../util/index.js";
 
 import the from "../globals-ui.js";
 import {friendlyFolderName} from "../model/bookmarks.js";
-import type {Container} from "../model/containers.js";
 import {copyIf} from "../model/index.js";
 import type {Tab, Window} from "../model/tabs.js";
 
@@ -123,13 +121,6 @@ export default defineComponent({
       return the.model.bookmarks
         .loadedFoldersInStashWithURL(this.tab.url)
         .map(f => friendlyFolderName(f.title));
-    },
-    container(): Container | undefined {
-      if (this.tab.cookieStoreId === undefined) return;
-      return the.model.containers.container(this.tab.cookieStoreId);
-    },
-    containerColor(): string | undefined {
-      return this.container?.color;
     },
   },
 

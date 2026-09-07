@@ -49,8 +49,6 @@ import {makeRandomString} from "../util/random.js";
 
 import * as BookmarkMetadata from "./bookmark-metadata.js";
 import * as Bookmarks from "./bookmarks.js";
-import * as BrowserSettings from "./browser-settings.js";
-import * as Containers from "./containers.js";
 import * as DeletedItems from "./deleted-items.js";
 import * as Favicons from "./favicons.js";
 import * as Options from "./options.js";
@@ -60,18 +58,24 @@ import {TreeSelection} from "./tree-selection.js";
 import {BookmarkTree, friendlyFolderName} from "./bookmarks.js";
 import {Tree, type TreePosition} from "./tree.js";
 
-export {
-  BookmarkMetadata,
-  Bookmarks,
-  BrowserSettings,
-  Containers,
-  DeletedItems,
-  Favicons,
-  Options,
-  Tabs,
-};
+export {BookmarkMetadata, Bookmarks, DeletedItems, Favicons, Options, Tabs};
 
 const trace = trace_fn("model");
+
+/** Determine if the URL provided is a new-tab URL or homepage URL (i.e.
+ * something the user would consider as "empty"). */
+export function isNewTabURL(url: string): boolean {
+  // Every &$#*!&ing browser has its own new-tab URL...
+  switch (url) {
+    case "about:blank":
+    case "about:newtab":
+    case "chrome://newtab/":
+    case "edge://newtab/":
+      return true;
+    default:
+      return false;
+  }
+}
 
 /** The path separator used in group titles, whenever we need to flatten nested
  * folders into tab groups. */
@@ -209,11 +213,9 @@ export const ModelTree = new (class extends Tree<
 })();
 
 export type Source = {
-  readonly browser_settings: BrowserSettings.Model;
   readonly options: Options.Model;
 
   readonly tabs: Tabs.Model;
-  readonly containers: Containers.Model;
   readonly bookmarks: Bookmarks.Model;
   readonly deleted_items: DeletedItems.Model;
 
@@ -230,11 +232,9 @@ export type Source = {
  * how to move tabs/bookmarks back and forth between, well, tabs and bookmarks.
  */
 export class Model {
-  readonly browser_settings: BrowserSettings.Model;
   readonly options: Options.Model;
 
   readonly tabs: Tabs.Model;
-  readonly containers: Containers.Model;
   readonly bookmarks: Bookmarks.Model;
   readonly deleted_items: DeletedItems.Model;
 
@@ -279,11 +279,9 @@ export class Model {
   );
 
   constructor(src: Source) {
-    this.browser_settings = src.browser_settings;
     this.options = src.options;
 
     this.tabs = src.tabs;
-    this.containers = src.containers;
     this.bookmarks = src.bookmarks;
     this.deleted_items = src.deleted_items;
 
@@ -322,12 +320,7 @@ export class Model {
   readonly reload = backingOff(async () => {
     trace("[pre-reload] dump of tab state", this.tabs.dumpState());
     trace("[pre-reload] dump of bookmark state", this.bookmarks.dumpState());
-    await Promise.all([
-      this.tabs.reload(),
-      this.containers.reload(),
-      this.bookmarks.reload(),
-      this.browser_settings.reload(),
-    ]);
+    await Promise.all([this.tabs.reload(), this.bookmarks.reload()]);
     trace("[post-reload] dump of tab state", this.tabs.dumpState());
     trace("[post-reload] dump of bookmark state", this.bookmarks.dumpState());
   });
@@ -428,7 +421,7 @@ export class Model {
 
   /** Returns a list of tabs in a given window which should be stashed. This may
    * be the entire window, or it may be a subset of tabs if the user has
-   * highlighted more than one tab in the Firefox UI.
+   * highlighted more than one tab in the browser UI.
    *
    * Note that pinned tabs may be included according to the users preferences.
    * Hidden tabs are also included, since they are expected to be filtered out
@@ -442,7 +435,7 @@ export class Model {
     );
 
     // Two different paths, depending on whether the user has highlighted
-    // multiple tabs in the Firefox UI:
+    // multiple tabs in the browser UI:
     if (selected.length > 1) {
       // The user has highlighted multiple tabs, meaning they intended to stash
       // precisely those tabs (not tab groups).
@@ -763,7 +756,7 @@ export class Model {
       if (
         active_tab &&
         restored_items.length > 0 &&
-        this.browser_settings.isNewTabURL(active_tab.url ?? "") &&
+        isNewTabURL(active_tab.url ?? "") &&
         active_tab.status === "complete"
       ) {
         browser.tabs.remove([active_tab.id]).catch(console.log);

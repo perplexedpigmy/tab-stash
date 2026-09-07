@@ -9,6 +9,7 @@ import type {Favicon} from "./model/favicons.js";
 import * as M from "./model/index.js";
 import {resolveNamed} from "./util/index.js";
 import {tracersEnabled} from "./util/debug.js";
+import {requestPersistentStorage} from "./util/persistent-storage.js";
 
 /** Global variables.  The core conceit here is these are all initialized as
  * `undefined!`, and then initialized properly in the async `init()` function
@@ -31,7 +32,7 @@ const the = {
   model: undefined! as M.Model,
 
   /** The UI form factor. */
-  view: "tab" as "tab" | "popup" | "sidebar",
+  view: "tab" as "tab" | "popup" | "sidebar" | "sidepanel",
 
   /** Flags to enable/disable debug tracing. */
   tracersEnabled: tracersEnabled,
@@ -43,12 +44,19 @@ export default the;
 export async function initTheGlobals() {
   performance.mark("PAGE LOAD START");
 
+  // Best-effort: keep the extension's storage persistent (see
+  // util/persistent-storage.ts).  This API isn't available in the service
+  // worker, so we request it from extension pages where it works.
+  requestPersistentStorage().catch(console.warn);
+
   // Figure out which form factor we're running in.
   switch (the.searchParams.get("view")) {
     case "popup":
     case "sidebar":
+    case "sidepanel":
     case "tab":
-      the.view = the.searchParams.get("view") as "tab" | "popup" | "sidebar";
+      the.view = the.searchParams.get("view") as
+        "tab" | "popup" | "sidebar" | "sidepanel";
       break;
   }
 
@@ -65,12 +73,10 @@ export async function initTheGlobals() {
     os: browser.runtime.getPlatformInfo
       ? browser.runtime.getPlatformInfo()
       : {os: "unknown"},
-    version: browser.management.getSelf(),
+    version: {version: browser.runtime.getManifest().version},
 
-    browser_settings: M.BrowserSettings.Model.live(),
     options: M.Options.Model.live(),
     tabs: M.Tabs.Model.from_browser(), // TODO load from cache
-    containers: M.Containers.Model.from_browser(),
     bookmarks: M.Bookmarks.Model.from_browser(), // TODO load from cache
     deleted_items: new M.DeletedItems.Model(
       new KVSClient<string, M.DeletedItems.SourceValue>("deleted_items"),

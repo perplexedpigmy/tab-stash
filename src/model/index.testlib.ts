@@ -69,7 +69,6 @@ export async function setupModelTestEnv(): Promise<ModelTestEnv> {
   const tab_model = await M.Tabs.Model.from_browser();
   const bm_model = await M.Bookmarks.Model.from_browser(STASH_ROOT_NAME);
   model = new M.Model({
-    browser_settings: await M.BrowserSettings.Model.live(),
     options: new M.Options.Model({
       sync: await stored_object_factory.get("sync", "test_options", SYNC_DEF),
       local: await stored_object_factory.get(
@@ -79,7 +78,6 @@ export async function setupModelTestEnv(): Promise<ModelTestEnv> {
       ),
     }),
     tabs: tab_model,
-    containers: await M.Containers.Model.from_browser(),
     bookmarks: bm_model,
     deleted_items: new M.DeletedItems.Model(deleted_items),
     favicons: new M.Favicons.Model(new KVSCache(favicons)),

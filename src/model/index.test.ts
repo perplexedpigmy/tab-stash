@@ -393,7 +393,7 @@ describe("model", () => {
         expect(env.model.tabs.tab(env.tabs.right_doug.id)).to.be.undefined;
       });
 
-      it("unpins and hides pinned tabs, since Firefox can't hide pinned tabs", async () => {
+      it("unpins and hides pinned tabs, since some browsers can't hide pinned tabs", async () => {
         await env.model.options.local.set({after_stashing_tab: "hide"});
         await events.next(browser.storage.onChanged);
         await events.next(browser.storage.local.onChanged);

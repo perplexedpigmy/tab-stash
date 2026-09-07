@@ -750,7 +750,7 @@ class MockTabs implements T.Static {
     }
     if (options.pinned !== undefined && options.pinned !== tab.pinned) {
       // Pinning/unpinning moves the tab to the boundary between pinned and
-      // unpinned tabs, just like in real Firefox.
+      // unpinned tabs, just like in real browsers.
       const win = this._state.win(tab.windowId);
       const oldIndex = tab.index;
       win.tabs.splice(oldIndex, 1);
@@ -1170,7 +1170,7 @@ class MockTabs implements T.Static {
         throw new Error(`createProperties cannot be set when groupId is set`);
       }
 
-      // Moving into an existing group. Firefox has some rather unhinged (but
+      // Moving into an existing group. Browsers have some rather unhinged (but
       // intuitive for users) behavior:
       //
       // - Tabs in different windows -> end of group
@@ -1505,7 +1505,7 @@ class MockTabGroups implements G.Static {
         );
       }
     } else {
-      // idk why firefox does this, but it sends events backwards (last tab
+      // Some browsers send events backwards (last tab
       // first) for tabs moving forward in the window
       if (fromStartIndex < toIndex) {
         let oldIndex = fromEndIndex - 1;

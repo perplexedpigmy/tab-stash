@@ -111,13 +111,12 @@ export default class Client<
 
         await new Promise(r => setTimeout(r, (10 - retries) * 100));
         --retries;
-        // We should receive an onDisconnect or similar event from the
-        // port which will cause us to reconnect, if necessary.  We
-        // don't explicitly reconnect here because it may just be that
-        // things are delayed (rather than lost), in which case,
-        // disconnecting might cause us to miss notifications from the
-        // service (i.e. we would be forced to trigger onSyncLost, which
-        // might be expensive).
+        // If our port is dead (e.g. the MV3 background service worker was
+        // terminated, disconnecting it), establish a fresh connection before
+        // retrying.  We only reconnect in that case--for plain timeouts or
+        // delayed responses we may just be slow, and reconnecting could cause
+        // us to miss notifications from the service.
+        if (this._port.error) this._reconnect();
       }
     }
   }

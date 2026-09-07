@@ -26,11 +26,19 @@ const trace = trace_fn("nano_port", globalThis?.location?.pathname);
 
 export class SvcRegistry {
   private services = new Map<string, NanoService<Send, Send>>();
+  private listening = false;
   private listener = (port: RTPort) => {
     const svc = this.services.get(port.name);
     if (!svc) {
-      // Probably intended for another audience.
-      trace(`[listener] ignored connection for ${port.name}`);
+      // The service isn't registered yet (e.g. the service worker just
+      // started and is still initializing its services).  Drop the
+      // connection: the client side will see the disconnect, reconnect,
+      // and by then the service should be registered.  (If we instead
+      // ignored the connection, the client's requests would hang forever.)
+      trace(
+        `[listener] dropped connection for unregistered service ${port.name}`,
+      );
+      port.disconnect();
       return;
     }
 
@@ -54,7 +62,18 @@ export class SvcRegistry {
 
   reset_testonly() {
     this.services.clear();
+    this.listening = false;
     browser.runtime.onConnect.removeListener(this.listener);
+  }
+
+  /** Register the onConnect listener (idempotently).  In MV3 service workers
+   * this must happen synchronously during startup, so that we never miss a
+   * connection from a UI context (side panel, popup, tab) that starts up while
+   * the worker is still initializing. */
+  start() {
+    if (this.listening) return;
+    this.listening = true;
+    browser.runtime.onConnect.addListener(this.listener);
   }
 
   register(name: string, svc: NanoService<Send, Send>) {
@@ -65,15 +84,7 @@ export class SvcRegistry {
 
     trace("[listener] listening for service", name);
     this.services.set(name, svc);
-
-    /* c8 ignore next -- Firefox bug workaround */
-    if (this.services.size == 1) {
-      // We wait to start listening until the first service is actually
-      // registered, because of Firefox bug 1465514--listening for ANY
-      // connections and then dropping a connection may result in other,
-      // unrelated connections getting spuriously dropped.
-      browser.runtime.onConnect.addListener(this.listener);
-    }
+    this.start();
   }
 }
 
@@ -92,6 +103,12 @@ export class Port<S extends Send, R extends Send> implements NanoPort<S, R> {
   onRequest?: (msg: R) => Promise<S>;
   onNotify?: (msg: R) => void;
 
+  /** Set once the underlying port is disconnected or otherwise unusable. */
+  private _error: {message?: string} | undefined;
+  get error(): {message?: string} | undefined {
+    return this._error;
+  }
+
   private port: RTPort;
   private pending: Map<string, PendingMsg<R>> = new Map();
 
@@ -101,6 +118,7 @@ export class Port<S extends Send, R extends Send> implements NanoPort<S, R> {
 
     this.port.onDisconnect.addListener(() => {
       this._trace("disconnected");
+      this._error = {message: "Disconnected"};
       this._flushPendingOnDisconnect();
       if (this.onDisconnect) this.onDisconnect(this);
     });
@@ -144,9 +162,11 @@ export class Port<S extends Send, R extends Send> implements NanoPort<S, R> {
         this.port.postMessage({tag, request} as RequestEnvelope<S>);
       } catch (e) {
         // Force-disconnect the port because it's probably in an invalid
-        // state, and the caller needs to recover.
+        // state, and the caller needs to recover.  Surface a retryable
+        // error so that clients can reconnect and re-send.
         this.disconnect();
-        throw e;
+        reject(new NanoDisconnectedError(this.name, tag));
+        return;
       }
 
       this.pending.set(tag, {

@@ -1,9 +1,9 @@
 {
   "name": "tab-stash",
-  "version": "0.1.0",
-  "description": "Tab Stash",
+  "version": "3.4.0",
+  "description": "Tab Stash (Chrome) - save and organize batches of tabs as bookmarks",
   "author": "Joshua J. Berry <des@voidborn.io>",
-  "repository": "https://github.com/josh-berry/tab-stash",
+  "repository": "https://github.com/perplexedpigmy/tab-stash",
   "license": "MPL-2.0",
   "type": "module",
   "engines": {
@@ -20,7 +20,6 @@
     "@vue/tsconfig": "^0.9",
     "c8": "^12.0",
     "chai": "^5.2",
-    "copyfiles": "^2.4",
     "fake-indexeddb": "^6.0",
     "idb": "^8.0",
     "less": "^4.8",
@@ -33,10 +32,16 @@
     "vite": "^8.1",
     "vue": "^3.5",
     "vue-tsc": "^3.3",
-    "web-ext": "^10.5",
     "webextension-polyfill": "^0.12"
   },
   "scripts": {
-    "build-for-amo": "./install-deps.sh && make rel"
+    "build": "node scripts/build.mjs production",
+    "build:dev": "node scripts/build.mjs development",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "c8 mocha",
+    "lint": "prettier --check .",
+    "lint:fix": "prettier --write .",
+    "check:i18n": "node check-i18n.js",
+    "package": "npm run build && (cd dist && zip -r ../tab-stash-chrome.zip .)"
   }
 }

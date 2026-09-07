@@ -5,9 +5,6 @@
   "extensionDescription": {
     "message": "Простой способ сохранять и восстанавливать группы вкладок в виде закладок."
   },
-  "stashThisTab": {
-    "message": "Сохранить эту вкладку"
-  },
   "showAdvancedSettings": {
     "message": "Показывать дополнительные настройки"
   },
@@ -249,7 +246,7 @@
     "message": "Что нового"
   },
   "whatsNewNotification": {
-    "message": "В Tab Stash $1 появились новые параметры сортировки и обновленный внешний вид под стиль боковой панели Firefox. Посмотрите, что еще нового!"
+    "message": "В Tab Stash $1 появились новые параметры сортировки и обновленный внешний вид под стиль боковой панели браузера. Посмотрите, что еще нового!"
   },
   "deletedItemUndo": {
     "message": "Удалено: \"$1\". Отменить?"
@@ -257,40 +254,40 @@
   "deletedItemsShow": {
     "message": "Удалено элементов: $1. Показать удаленные элементы?"
   },
-  "group.one": {
+  "group_one": {
     "message": "$1 группа"
   },
-  "group.few": {
+  "group_few": {
     "message": "$1 группы"
   },
-  "group.many": {
+  "group_many": {
     "message": "$1 групп"
   },
-  "group.other": {
+  "group_other": {
     "message": "$1 группы"
   },
-  "tab.one": {
+  "tab_one": {
     "message": "$1 вкладка"
   },
-  "tab.few": {
+  "tab_few": {
     "message": "$1 вкладки"
   },
-  "tab.many": {
+  "tab_many": {
     "message": "$1 вкладок"
   },
-  "tab.other": {
+  "tab_other": {
     "message": "$1 вкладки"
   },
-  "stashed_tab.one": {
+  "stashed_tab_one": {
     "message": "$1 сохраненная вкладка"
   },
-  "stashed_tab.few": {
+  "stashed_tab_few": {
     "message": "$1 сохраненные вкладки"
   },
-  "stashed_tab.many": {
+  "stashed_tab_many": {
     "message": "$1 сохраненных вкладок"
   },
-  "stashed_tab.other": {
+  "stashed_tab_other": {
     "message": "$1 сохраненные вкладки"
   },
   "search_placeholder_fmt": {
@@ -305,28 +302,28 @@
   "fetchingIconsPage": {
     "message": "Получение иконок для каждой страницы..."
   },
-  "group_dative.one": {
+  "group_dative_one": {
     "message": "$1 группе"
   },
-  "group_dative.few": {
+  "group_dative_few": {
     "message": "$1 группам"
   },
-  "group_dative.many": {
+  "group_dative_many": {
     "message": "$1 группам"
   },
-  "group_dative.other": {
+  "group_dative_other": {
     "message": "$1 группам"
   },
-  "tab_dative.one": {
+  "tab_dative_one": {
     "message": "$1 вкладке"
   },
-  "tab_dative.few": {
+  "tab_dative_few": {
     "message": "$1 вкладкам"
   },
-  "tab_dative.many": {
+  "tab_dative_many": {
     "message": "$1 вкладкам"
   },
-  "tab_dative.other": {
+  "tab_dative_other": {
     "message": "$1 вкладкам"
   },
   "openTabsTitle": {
@@ -335,28 +332,28 @@
   "unstashedTabsTitle": {
     "message": "Несохраненные вкладки"
   },
-  "open_tabs.one": {
+  "open_tabs_one": {
     "message": "$1 открытая вкладка"
   },
-  "open_tabs.few": {
+  "open_tabs_few": {
     "message": "$1 открытые вкладки"
   },
-  "open_tabs.many": {
+  "open_tabs_many": {
     "message": "$1 открытых вкладок"
   },
-  "open_tabs.other": {
+  "open_tabs_other": {
     "message": "$1 открытые вкладки"
   },
-  "unstashed_tabs.one": {
+  "unstashed_tabs_one": {
     "message": "$1 несохраненная вкладка"
   },
-  "unstashed_tabs.few": {
+  "unstashed_tabs_few": {
     "message": "$1 несохраненные вкладки"
   },
-  "unstashed_tabs.many": {
+  "unstashed_tabs_many": {
     "message": "$1 несохраненных вкладок"
   },
-  "unstashed_tabs.other": {
+  "unstashed_tabs_other": {
     "message": "$1 несохраненные вкладки"
   },
   "hideTabsForGroup": {
@@ -413,67 +410,67 @@
   "closeHiddenTabsMenu": {
     "message": "Закрыть скрытые вкладки"
   },
-  "moveItemsToNewGroup.one": {
+  "moveItemsToNewGroup_one": {
     "message": "Переместить $1 объект в новую группу (удерживайте $2 для копирования)"
   },
-  "moveItemsToNewGroup.few": {
+  "moveItemsToNewGroup_few": {
     "message": "Переместить $1 объекта в новую группу (удерживайте $2 для копирования)"
   },
-  "moveItemsToNewGroup.many": {
+  "moveItemsToNewGroup_many": {
     "message": "Переместить $1 объектов в новую группу (удерживайте $2 для копирования)"
   },
-  "moveItemsToNewGroup.other": {
+  "moveItemsToNewGroup_other": {
     "message": "Переместить $1 объекта в новую группу (удерживайте $2 для копирования)"
   },
-  "openSelectedItems.one": {
+  "openSelectedItems_one": {
     "message": "Открыть $1 объект"
   },
-  "openSelectedItems.few": {
+  "openSelectedItems_few": {
     "message": "Открыть $1 объекта"
   },
-  "openSelectedItems.many": {
+  "openSelectedItems_many": {
     "message": "Открыть $1 объектов"
   },
-  "openSelectedItems.other": {
+  "openSelectedItems_other": {
     "message": "Открыть $1 объекта"
   },
-  "unstashSelectedItems.one": {
+  "unstashSelectedItems_one": {
     "message": "Убрать из сохраненных $1 объект"
   },
-  "unstashSelectedItems.few": {
+  "unstashSelectedItems_few": {
     "message": "Убрать из сохраненных $1 объекта"
   },
-  "unstashSelectedItems.many": {
+  "unstashSelectedItems_many": {
     "message": "Убрать из сохраненных $1 объектов"
   },
-  "unstashSelectedItems.other": {
+  "unstashSelectedItems_other": {
     "message": "Убрать из сохраненных $1 объекта"
   },
-  "closeTabsConfirm.one": {
+  "closeTabsConfirm_one": {
     "message": "Закрыть $1 вкладку"
   },
-  "closeTabsConfirm.few": {
+  "closeTabsConfirm_few": {
     "message": "Закрыть $1 вкладки"
   },
-  "closeTabsConfirm.many": {
+  "closeTabsConfirm_many": {
     "message": "Закрыть $1 вкладок"
   },
-  "closeTabsConfirm.other": {
+  "closeTabsConfirm_other": {
     "message": "Закрыть $1 вкладки"
   },
   "cancelButton": {
     "message": "Отмена"
   },
-  "closeTabsWarn.one": {
+  "closeTabsWarn_one": {
     "message": "Вы собираетесь закрыть $1 вкладку за раз."
   },
-  "closeTabsWarn.few": {
+  "closeTabsWarn_few": {
     "message": "Вы собираетесь закрыть $1 вкладки за раз."
   },
-  "closeTabsWarn.many": {
+  "closeTabsWarn_many": {
     "message": "Вы собираетесь закрыть $1 вкладок за раз."
   },
-  "closeTabsWarn.other": {
+  "closeTabsWarn_other": {
     "message": "Вы собираетесь закрыть $1 вкладки за раз."
   },
   "closeTabsIrreversible": {
@@ -554,16 +551,16 @@
   "folder_tooltip_fmt": {
     "message": "$1\n$2, $3 ($4 открыто, $5 выгружено, $6 скрыто)"
   },
-  "child_group.one": {
+  "child_group_one": {
     "message": "$1 группа"
   },
-  "child_group.few": {
+  "child_group_few": {
     "message": "$1 группы"
   },
-  "child_group.many": {
+  "child_group_many": {
     "message": "$1 групп"
   },
-  "child_group.other": {
+  "child_group_other": {
     "message": "$1 группы"
   },
   "copiedNotification": {
@@ -695,16 +692,16 @@
   "openSelectedButton": {
     "message": "Открыть"
   },
-  "openSelectedIntoTabGroupTooltip.one": {
+  "openSelectedIntoTabGroupTooltip_one": {
     "message": "Открыть $1 выбранный элемент в этой группе вкладок"
   },
-  "openSelectedIntoTabGroupTooltip.few": {
+  "openSelectedIntoTabGroupTooltip_few": {
     "message": "Открыть $1 выбранных элемента в этой группе вкладок"
   },
-  "openSelectedIntoTabGroupTooltip.many": {
+  "openSelectedIntoTabGroupTooltip_many": {
     "message": "Открыть $1 выбранных элементов в этой группе вкладок"
   },
-  "openSelectedIntoTabGroupTooltip.other": {
+  "openSelectedIntoTabGroupTooltip_other": {
     "message": "Открыть $1 выбранных элемента в этой группе вкладок"
   },
   "unstashSelectedTooltip": {
@@ -713,16 +710,16 @@
   "unstashSelectedButton": {
     "message": "Убрать из сохраненных"
   },
-  "unstashSelectedIntoTabGroupTooltip.one": {
+  "unstashSelectedIntoTabGroupTooltip_one": {
     "message": "Восстановить $1 выбранный элемент в эту группу вкладок"
   },
-  "unstashSelectedIntoTabGroupTooltip.few": {
+  "unstashSelectedIntoTabGroupTooltip_few": {
     "message": "Восстановить $1 выбранных элемента в эту группу вкладок"
   },
-  "unstashSelectedIntoTabGroupTooltip.many": {
+  "unstashSelectedIntoTabGroupTooltip_many": {
     "message": "Восстановить $1 выбранных элементов в эту группу вкладок"
   },
-  "unstashSelectedIntoTabGroupTooltip.other": {
+  "unstashSelectedIntoTabGroupTooltip_other": {
     "message": "Восстановить $1 выбранных элемента в эту группу вкладок"
   },
   "exportSelectedTooltip": {
@@ -890,16 +887,19 @@
   "close": {
     "message": "Закрыть"
   },
-  "openSelectedIntoNewTabGroupTooltip.one": {
+  "openSelectedIntoNewTabGroupTooltip_one": {
     "message": "Открыть $1 выбранный элемент в новой группе вкладок (удерживайте $2 для копирования)"
   },
-  "openSelectedIntoNewTabGroupTooltip.few": {
+  "openSelectedIntoNewTabGroupTooltip_few": {
     "message": "Открыть $1 выбранных элемента в новой группе вкладок (удерживайте $2 для копирования)"
   },
-  "openSelectedIntoNewTabGroupTooltip.many": {
+  "openSelectedIntoNewTabGroupTooltip_many": {
     "message": "Открыть $1 выбранных элементов в новой группе вкладок (удерживайте $2 для копирования)"
   },
-  "openSelectedIntoNewTabGroupTooltip.other": {
+  "openSelectedIntoNewTabGroupTooltip_other": {
     "message": "Открыть $1 выбранных элемента в новой группе вкладок (удерживайте $2 для копирования)"
+  },
+  "openSidePanelCommandDescription": {
+    "message": "Открыть боковую панель Tab Stash"
   }
 }

@@ -27,18 +27,21 @@ export default async function (): Promise<M.Model> {
     >("bookmark-metadata", "bookmark-metadata"),
   });
 
-  const sources = await resolveNamed({
-    browser_settings: M.BrowserSettings.Model.live(),
-    options: M.Options.Model.live(),
-    tabs: M.Tabs.Model.from_browser("background"),
-    containers: M.Containers.Model.from_browser(),
-    bookmarks: M.Bookmarks.Model.from_browser(),
-    deleted_items: new M.DeletedItems.Model(kvs.deleted_items),
-  });
-
+  // Register the KVS services as soon as they're open--before doing the
+  // (potentially slow) work of loading the tabs/bookmarks models below.  In an
+  // MV3 service worker, UI contexts (side panel, popup, tab) may connect to
+  // these services as soon as the worker starts, and connections made before
+  // a service is registered are dropped (and must be retried by the client).
   listen("deleted_items", kvs.deleted_items);
   listen("favicons", kvs.favicons);
   listen("bookmark-metadata", kvs.bookmark_metadata);
+
+  const sources = await resolveNamed({
+    options: M.Options.Model.live(),
+    tabs: M.Tabs.Model.from_browser("background"),
+    bookmarks: M.Bookmarks.Model.from_browser(),
+    deleted_items: new M.DeletedItems.Model(kvs.deleted_items),
+  });
 
   const model = new M.Model({
     ...sources,

@@ -98,7 +98,7 @@ function readAllMessages(tree) {
  * "", "zero", "one", "two", "few", "many", or "other".
  */
 function splitMsgKey(key) {
-  const match = key.match(/^(.*?)(?:\.(zero|one|two|few|many|other))?$/);
+  const match = key.match(/^(.*?)(?:[._](zero|one|two|few|many|other))?$/);
   if (!match) {
     throw new Error(`Invalid message key: ${key}`);
   }

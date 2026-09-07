@@ -10,7 +10,7 @@ into groups. When it's time to pick up where you left off, open Tab Stash and
 restore just the tabs or groups you want.
 
 Because Tab Stash stores your tabs as bookmarks, they will even sync to your
-other computers or mobile devices. Uses Firefox Sync, if configured---no need
+other computers or mobile devices. Uses browser sync, if configured---no need
 to keep track of yet another account.
 
 <img src="screenshot.png" alt="Screenshot" width="100%"/>
@@ -19,7 +19,7 @@ to keep track of yet another account.
 
 - Stash all your open tabs with the Tab Stash toolbar button (if configured), or
   individual tabs with a button in the address bar
-- View your stash in the Firefox sidebar, a popup, or a full-browser tab view
+- View your stash in the Chrome side panel, a popup, or a full-browser tab view
 - Restore individual tabs, or whole groups of tabs, with a single click
 - Search your stash with the quick-search bar
 - Organize your stash into groups and sub-groups
@@ -31,6 +31,6 @@ to keep track of yet another account.
 
 ## Want to give it a try?
 
-Install Tab Stash from [Mozilla Add-Ons][amo]!
+Install Tab Stash from the [Chrome Web Store]!
 
-[amo]: https://addons.mozilla.org/en-US/firefox/addon/tab-stash/
+[Chrome Web Store]: https://chromewebstore.google.com/

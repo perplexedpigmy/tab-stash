@@ -20,7 +20,7 @@ import stored_object, {
 import {resolveNamed} from "../util/index.js";
 import {errorLog, UserError} from "../util/oops.js";
 
-export const SHOW_WHAT_OPT = anEnum("sidebar", "tab", "popup", "none");
+export const SHOW_WHAT_OPT = anEnum("sidepanel", "tab", "popup", "none");
 export const STASH_WHAT_OPT = anEnum("all", "single", "none");
 export type ShowWhatOpt = ReturnType<typeof SHOW_WHAT_OPT>;
 export type StashWhatOpt = ReturnType<typeof STASH_WHAT_OPT>;
@@ -33,7 +33,7 @@ export const SYNC_DEF = {
   meta_show_advanced: {default: false, is: aBoolean},
 
   // When the user stashes from the context menu or address bar button, do we
-  // show the "sidebar", "tab", or "none" (of the above)?
+  // show the "sidepanel", "tab", or "none" (of the above)?
   open_stash_in: {
     default: undefined,
     is: maybeUndef(SHOW_WHAT_OPT),
@@ -140,7 +140,7 @@ export const LOCAL_DEF = {
   // Feature flags
 
   /** Re-open a recently-closed tab if one can't be found.  Removed due to bugs
-   * in Firefox and lots of complexity that I don't want to deal with in the
+   * in some browsers and lots of complexity that I don't want to deal with in the
    * tab-restoration code.  See #188 and #200. */
   // ff_restore_closed_tabs: {default: false, is: aBoolean},
 
@@ -198,9 +198,9 @@ export class Model {
     );
   });
 
-  /** Is the Firefox sidebar supported? */
-  hasSidebar(): boolean {
-    return !!browser.sidebarAction;
+  /** Is the Chrome side panel supported? */
+  hasSidePanel(): boolean {
+    return !!(browser as any).sidePanel;
   }
 
   /** Based on the current settings, what can the toolbar stash? */
@@ -217,7 +217,7 @@ export class Model {
 
   /** Based on the current settings, what UIs can the browser show? */
   canBrowserActionShow(what: ShowWhatOpt): boolean {
-    if (what === "sidebar" && !browser.sidebarAction) return false;
+    if (what === "sidepanel" && !(browser as any).sidePanel) return false;
 
     const browserActionStash = this.sync.state.browser_action_stash;
 

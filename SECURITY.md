@@ -5,13 +5,13 @@
 Only the latest release is supported (regardless of distribution channel).
 Supported distribution channels include:
 
-- The official listing on [addons.mozilla.org][amo].
+- The official listing on the [Chrome Web Store][cws].
 
 - Re-packaged/re-distributed copies of the latest version are supported, so long
   as they are not patched and were built following the "release version" build
   instructions in the README file.
 
-[amo]: https://addons.mozilla.org/firefox/addon/tab-stash/
+[cws]: https://chromewebstore.google.com/
 
 ## Reporting a Vulnerability
 

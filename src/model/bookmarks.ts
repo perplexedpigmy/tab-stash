@@ -511,10 +511,10 @@ export class Model {
    * bookmark folder's children to move the item to the end of the folder.)
    *
    * Use this instead of `browser.bookmarks.move()`, which behaves differently
-   * in Chrome and Firefox... */
+   * across browsers... */
   async move(node: Node, toParent: Folder, toIndex: number): Promise<void> {
-    // Firefox's `index` parameter behaves like the bookmark is first
-    // removed, then re-added.  Chrome's/Edge's behaves like the bookmark is
+    // Some browsers' `index` parameter behaves like the bookmark is first
+    // removed, then re-added.  Others behave like the bookmark is
     // first added, then removed from its old location, so the index of the
     // item after the move will sometimes be toIndex-1 instead of toIndex;
     // we account for this below.
@@ -526,13 +526,13 @@ export class Model {
     // Clamp the destination index based on the model length, or the poll
     // below won't see the index it's expecting.  (This isn't 100%
     // reliable--we might still get an exception if multiple concurrent
-    // moves are going on, but even Firefox itself has bugs in this
+    // moves are going on, but even browsers themselves have bugs in this
     // situation, soooo... *shrug*)
     toIndex = Math.min(toParent.children.length, Math.max(0, toIndex));
 
     /* c8 ignore next -- platform-specific check */
     if (!!browser.runtime.getBrowserInfo) {
-      // We're using Firefox
+      // We're using the browser's bookmark API
       if (position.parent === toParent) {
         if (toIndex > position.index) toIndex--;
       }
@@ -562,7 +562,7 @@ export class Model {
       if (!pos) tryAgain();
 
       // We assume the bookmark move has happened even if the bookmark did not
-      // move to where we expect.  This is because the Firefox bookmark DB might
+      // move to where we expect.  This is because the bookmark DB might
       // have incorrect indexes in it, so the bookmark might not move to the
       // position we expect even if no other concurrent moves are happening.
       // There is unfortunately little we can do about this, so we ignore it.
@@ -1060,13 +1060,13 @@ function makeBookmark(nodeId: NodeID): Bookmark {
 /** A cross-browser compatible way to tell if a bookmark returned by the
  * `browser.bookmarks` API is a folder or not. */
 function isBrowserBTNFolder(bm: Bookmarks.BookmarkTreeNode): boolean {
-  if (bm.type === "folder") return true; // for Firefox
+  if (bm.type === "folder") return true;
   if (bm.children) return true; // for Chrome (sometimes)
   if (!("type" in bm) && !("url" in bm)) return true; // for Chrome
   return false;
 }
 
-/** Firefox sometimes returns a list of bookmark children that have negative
+/** Some browsers sometimes return a list of bookmark children that have negative
  * indexes, indexes with gaps, or duplicate indexes. We try to normalize these
  * here so the rest of Tab Stash doesn't complain. See:
  * https://github.com/josh-berry/tab-stash/issues/542 */

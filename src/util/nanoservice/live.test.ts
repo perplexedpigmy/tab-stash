@@ -371,7 +371,9 @@ describe("util/nanoservice", function () {
         await client.request(42);
         /* c8 ignore next */ throw "unreachable";
       } catch (e: any) {
-        expect(e.message).to.equal("oops");
+        // A failed send is surfaced as a retryable disconnection error so
+        // that clients can reconnect and re-send.
+        expect(e).to.be.instanceOf(M.NanoDisconnectedError);
       }
 
       await events.next("browser.runtime.onDisconnect");
@@ -382,7 +384,7 @@ describe("util/nanoservice", function () {
   describe("NanoService", function () {
     beforeEach(() => M.registry.reset_testonly());
 
-    it("ignores connections for other services", async () => {
+    it("drops connections for unregistered services", async () => {
       let count = 0;
       M.listen("test", {
         /* c8 ignore next 3 */
@@ -391,9 +393,15 @@ describe("util/nanoservice", function () {
         },
       });
 
-      M.connect("other");
+      const client = M.connect("other");
       await events.next("browser.runtime.onConnect");
       expect(count).to.equal(0);
+
+      // The client should be told the connection was refused, so that it can
+      // retry (e.g. against a service that is still starting up).
+      expect(await events.next("browser.runtime.onDisconnect")).not.to.be
+        .undefined;
+      expect((client as any).error ?? client).to.exist;
     });
 
     it("fires connection events", async function () {

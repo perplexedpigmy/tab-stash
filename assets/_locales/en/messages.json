@@ -5,9 +5,6 @@
   "extensionDescription": {
     "message": "A no-fuss way to save and restore batches of tabs as bookmarks."
   },
-  "stashThisTab": {
-    "message": "Stash this tab"
-  },
   "showAdvancedSettings": {
     "message": "Show advanced settings"
   },
@@ -249,7 +246,7 @@
     "message": "What's New"
   },
   "whatsNewNotification": {
-    "message": "Tab Stash $1 has new sorting options and a refreshed look to match Firefox's new sidebar styling. See what else is new!"
+    "message": "Tab Stash $1 has new sorting options and a refreshed look to match the browser's new sidebar styling. See what else is new!"
   },
   "deletedItemUndo": {
     "message": "Deleted \"$1\". Undo?"
@@ -257,22 +254,22 @@
   "deletedItemsShow": {
     "message": "Deleted $1 items. Show what was deleted?"
   },
-  "group.one": {
+  "group_one": {
     "message": "$1 group"
   },
-  "group.other": {
+  "group_other": {
     "message": "$1 groups"
   },
-  "tab.one": {
+  "tab_one": {
     "message": "$1 tab"
   },
-  "tab.other": {
+  "tab_other": {
     "message": "$1 tabs"
   },
-  "stashed_tab.one": {
+  "stashed_tab_one": {
     "message": "$1 stashed tab"
   },
-  "stashed_tab.other": {
+  "stashed_tab_other": {
     "message": "$1 stashed tabs"
   },
   "search_placeholder_fmt": {
@@ -287,16 +284,16 @@
   "fetchingIconsPage": {
     "message": "Fetching icons for each page..."
   },
-  "group_dative.one": {
+  "group_dative_one": {
     "message": "$1 group"
   },
-  "group_dative.other": {
+  "group_dative_other": {
     "message": "$1 groups"
   },
-  "tab_dative.one": {
+  "tab_dative_one": {
     "message": "$1 tab"
   },
-  "tab_dative.other": {
+  "tab_dative_other": {
     "message": "$1 tabs"
   },
   "openTabsTitle": {
@@ -305,16 +302,16 @@
   "unstashedTabsTitle": {
     "message": "Unstashed Tabs"
   },
-  "open_tabs.one": {
+  "open_tabs_one": {
     "message": "$1 open tab"
   },
-  "open_tabs.other": {
+  "open_tabs_other": {
     "message": "$1 open tabs"
   },
-  "unstashed_tabs.one": {
+  "unstashed_tabs_one": {
     "message": "$1 unstashed tab"
   },
-  "unstashed_tabs.other": {
+  "unstashed_tabs_other": {
     "message": "$1 unstashed tabs"
   },
   "hideTabsForGroup": {
@@ -371,37 +368,37 @@
   "closeHiddenTabsMenu": {
     "message": "Close Hidden Tabs"
   },
-  "moveItemsToNewGroup.one": {
+  "moveItemsToNewGroup_one": {
     "message": "Move $1 item to a new group (hold $2 to copy)"
   },
-  "moveItemsToNewGroup.other": {
+  "moveItemsToNewGroup_other": {
     "message": "Move $1 items to a new group (hold $2 to copy)"
   },
-  "openSelectedItems.one": {
+  "openSelectedItems_one": {
     "message": "Open $1 item"
   },
-  "openSelectedItems.other": {
+  "openSelectedItems_other": {
     "message": "Open $1 items"
   },
-  "unstashSelectedItems.one": {
+  "unstashSelectedItems_one": {
     "message": "Unstash $1 item"
   },
-  "unstashSelectedItems.other": {
+  "unstashSelectedItems_other": {
     "message": "Unstash $1 items"
   },
-  "closeTabsConfirm.one": {
+  "closeTabsConfirm_one": {
     "message": "Close $1 tab"
   },
-  "closeTabsConfirm.other": {
+  "closeTabsConfirm_other": {
     "message": "Close $1 tabs"
   },
   "cancelButton": {
     "message": "Cancel"
   },
-  "closeTabsWarn.one": {
+  "closeTabsWarn_one": {
     "message": "You're about to close $1 tab at once."
   },
-  "closeTabsWarn.other": {
+  "closeTabsWarn_other": {
     "message": "You're about to close $1 tabs at once."
   },
   "closeTabsIrreversible": {
@@ -482,10 +479,10 @@
   "folder_tooltip_fmt": {
     "message": "$1\n$2, $3 ($4 open, $5 unloaded, $6 hidden)"
   },
-  "child_group.one": {
+  "child_group_one": {
     "message": "$1 group"
   },
-  "child_group.other": {
+  "child_group_other": {
     "message": "$1 groups"
   },
   "copiedNotification": {
@@ -617,10 +614,10 @@
   "openSelectedButton": {
     "message": "Open"
   },
-  "openSelectedIntoTabGroupTooltip.one": {
+  "openSelectedIntoTabGroupTooltip_one": {
     "message": "Open $1 selected item into this tab group"
   },
-  "openSelectedIntoTabGroupTooltip.other": {
+  "openSelectedIntoTabGroupTooltip_other": {
     "message": "Open $1 selected items into this tab group"
   },
   "unstashSelectedTooltip": {
@@ -629,10 +626,10 @@
   "unstashSelectedButton": {
     "message": "Unstash"
   },
-  "unstashSelectedIntoTabGroupTooltip.one": {
+  "unstashSelectedIntoTabGroupTooltip_one": {
     "message": "Unstash $1 selected item into this tab group"
   },
-  "unstashSelectedIntoTabGroupTooltip.other": {
+  "unstashSelectedIntoTabGroupTooltip_other": {
     "message": "Unstash $1 selected items into this tab group"
   },
   "exportSelectedTooltip": {
@@ -800,10 +797,13 @@
   "close": {
     "message": "Close"
   },
-  "openSelectedIntoNewTabGroupTooltip.one": {
+  "openSelectedIntoNewTabGroupTooltip_one": {
     "message": "Open $1 selected item into a new tab group (hold $2 to copy)"
   },
-  "openSelectedIntoNewTabGroupTooltip.other": {
+  "openSelectedIntoNewTabGroupTooltip_other": {
     "message": "Open $1 selected items into a new tab group (hold $2 to copy)"
+  },
+  "openSidePanelCommandDescription": {
+    "message": "Open Tab Stash side panel"
   }
 }

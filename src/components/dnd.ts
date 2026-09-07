@@ -70,9 +70,9 @@ export interface DNDLifecycle<Options> {
 }
 
 // This is an ugly bit of global state to allow different drop targets to
-// coordinate with each other about drag-and-drop events. Firefox sometimes
-// just... doesn't fire dragleave events for some reason, so there's no reliable
-// way to know when a dragged item is no longer in its drop target. Sigh.
+// coordinate with each other about drag-and-drop events. Some browsers just
+// don't fire dragleave events reliably, so there's no reliable way to know
+// when a dragged item is no longer in its drop target.
 let resetDragStateHook = () => {};
 
 // Used by the drop code math to determine the drop position.
@@ -80,7 +80,7 @@ const POSITIONS: DNDDropPosition[] = ["before", "inside", "after"];
 
 /** Registers a hook for other drop targets to be able to call us back when our
  * drag state should be cleared (e.g. because the drop target has changed, but
- * we never got a notification from Firefox).
+ * we never got a notification from the browser).
  *
  * Only one item can be a drop target at a time, so this always clears the
  * drag state of the prior item before registering our hook. */

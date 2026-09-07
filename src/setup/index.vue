@@ -74,14 +74,14 @@
 
       <p>
         <label
-          v-if="options.hasSidebar()"
-          :class="{disabled: !options.canBrowserActionShow('sidebar')}"
+          v-if="options.hasSidePanel()"
+          :class="{disabled: !options.canBrowserActionShow('sidepanel')}"
           ><input
             type="radio"
             name="browser_action_show"
-            value="sidebar"
+            value="sidepanel"
             v-model="browser_action_show"
-            :disabled="!options.canBrowserActionShow('sidebar')"
+            :disabled="!options.canBrowserActionShow('sidepanel')"
           />
           {{ $t("setupShowSidebar") }}</label
         >
@@ -137,12 +137,12 @@
         {{ $t("setupAddressBarContextStash") }}
       </p>
 
-      <p v-if="options.hasSidebar()">
+      <p v-if="options.hasSidePanel()">
         <label
           ><input
             type="radio"
             name="open_stash_in"
-            value="sidebar"
+            value="sidepanel"
             v-model="open_stash_in"
           />{{ $t("setupShowSidebar") }}</label
         >

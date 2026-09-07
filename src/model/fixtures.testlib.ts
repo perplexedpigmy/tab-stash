@@ -127,7 +127,7 @@ const BOOKMARKS = {
           children: [
             // The indexes in big_stash are intentionally corrupt/inconsistent
             // with their actual positions in the folder, to simulate some
-            // common corruptions I've seen in Firefox's bookmarks DB (both
+            // common corruptions I've seen in browser bookmarks DBs (both
             // duplicate indexes and negative indexes).
             {_index: -2, id: "one", title: "One", url: `${B}#1`},
             {_index: -1, id: "two", title: "Two", url: `${B}#2`},

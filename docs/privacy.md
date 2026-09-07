@@ -3,11 +3,11 @@
 Tab Stash does not share any of your information with the developers, or with
 any third party, except as noted below.
 
-## Bookmarks and Firefox Sync
+## Bookmarks and Sync
 
 Tab Stash uses bookmarks to store all your stashed tabs. Your bookmarks are
-synced using the Firefox Sync service (if configured), so your stashed tabs will
-appear on all computers linked to your Firefox Sync account.
+synced using the browser's sync service (if configured), so your stashed tabs will
+appear on all computers linked to your browser's sync account.
 
 If you wish to stop using Tab Stash entirely, you can still retrieve your
 stashed tabs in the "Tab Stash" folder of your bookmarks.
@@ -51,8 +51,8 @@ Here's why we need each of them:
   data so the cache can hold all the icons. Icons are removed from the cache
   automatically once they're no longer needed.
 
-- **Containers (contextual identities)** and **Cookies**: If you use Firefox's
-  containers feature, these permissions are used to identify which container
+- **Containers (contextual identities)** and **Cookies**: If your browser
+  supports containers, these permissions are used to identify which container
   each tab belongs to and show an indicator in the Tab Stash UI.
 
 - **Menus**: Used to provide additional options for Tab Stash in the right-click

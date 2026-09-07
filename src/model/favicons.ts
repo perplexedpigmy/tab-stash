@@ -118,8 +118,8 @@ export class Model {
   }
 
   private _updateFavicon(tab: Tabs.Tab) {
-    // We ignore favicons when the tab is still loading, because Firefox may
-    // send us events where a tab has a new URL, but an old favicon which is
+    // We ignore favicons when the tab is still loading, because some browsers may
+    // send events where a tab has a new URL, but an old favicon which is
     // for the URL the tab is navigating away from.
     if (tab.url && tab.status === "complete") this.set(urlToOpen(tab.url), tab);
   }

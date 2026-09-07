@@ -12,7 +12,7 @@ import Main from "./index.vue";
 launch(Main, async () => {
   const r = await resolveNamed({
     options: Options.Model.live(),
-    extn: browser.management.getSelf(),
+    extn: {version: browser.runtime.getManifest().version},
   });
   (<any>globalThis).options = r.options;
 

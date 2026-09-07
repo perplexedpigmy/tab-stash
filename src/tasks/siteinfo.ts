@@ -17,8 +17,8 @@ const LOADING_TIMEOUT = 30000; /* ms */
 // for the tab to set one?
 const FAVICON_TIMEOUT = 2000; /* ms */
 
-// If the browser replaces a tab with another tab (e.g. due to Firefox
-// Multi-Account Containers), how long do we wait for the replacement tab to
+// If the browser replaces a tab with another tab (e.g. due to multi-account
+// containers), how long do we wait for the replacement tab to
 // show up?  (This is independent of the other timeouts, which may still fire
 // while we are waiting for this one.)
 const REPLACEMENT_TIMEOUT = 3000; /* ms */
@@ -99,8 +99,8 @@ export function fetchInfoForSites(
 //
 // If the tab is closed before site info can be fetched, a TabRemovedError will
 // be thrown.  (Note: Typically this only happens if a user closes the tab by
-// mistake; tabs which are replaced e.g. by Firefox Containers re-opening the
-// tab automatically in the right container are automatically handled without
+// mistake; tabs which are replaced e.g. by multi-account containers re-opening
+// the tab automatically in the right container are automatically handled without
 // throwing TabRemovedError.)
 export async function fetchSiteInfo(url: string): Promise<SiteInfo> {
   let events: AsyncChannel<TabEvent> | undefined = undefined;

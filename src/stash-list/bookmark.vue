@@ -19,7 +19,6 @@
       'no-match': !filterInfo.isMatching,
     }"
     :title="bookmark.title"
-    :data-container-color="related_container_color"
   >
     <item-icon
       :class="{
@@ -131,29 +130,6 @@ export default defineComponent({
       return Array.from(tab_model.tabsWithURL(this.bookmark.url)).filter(
         t => t.flattenedPosition?.parent === target_window,
       );
-    },
-
-    related_container_color(): string | undefined {
-      const containers = the.model.containers;
-
-      // Reduce here has three states:
-      //   undefined: We'll set the state if the tab isn't hidden and there's
-      //     a container color associated with this tab.
-      //   null: We had a container color in the state, but then we saw
-      //     a different one.
-      //   string: One or more tabs with a container color, and all
-      //     set to the same color.
-      const container_color = this.relatedTabs.reduce(
-        (prev: string | undefined | null, t: Tab) => {
-          if (t.hidden || prev === null || t.cookieStoreId === undefined)
-            return prev;
-          const cc = containers.container(t.cookieStoreId)?.color;
-          if (!cc) return prev;
-          return prev === undefined || cc === prev ? cc : null;
-        },
-        undefined,
-      );
-      return container_color ?? undefined;
     },
 
     tabState(): RelatedTabState {

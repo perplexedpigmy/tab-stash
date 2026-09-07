@@ -1,10 +1,10 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "default_locale": "en",
   "name": "__MSG_extensionName__",
   "version": "3.4",
   "description": "__MSG_extensionDescription__",
-  "homepage_url": "https://josh-berry.github.io/tab-stash/",
+  "homepage_url": "https://github.com/perplexedpigmy/tab-stash",
   "icons": {
     "16": "icons/logo-16.png",
     "32": "icons/logo-32.png",
@@ -13,93 +13,49 @@
     "96": "icons/logo-96.png",
     "128": "icons/logo-128.png"
   },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "tab-stash@condordes.net",
-      "strict_min_version": "150.0"
-    }
-  },
   "permissions": [
-    "sessions",
     "tabs",
-    "tabHide",
-    "tabGroups",
     "bookmarks",
-    "contextMenus",
-    "browserSettings",
     "storage",
     "unlimitedStorage",
-    "contextualIdentities",
-    "cookies"
+    "contextMenus",
+    "alarms",
+    "sidePanel",
+    "tabGroups",
+    "windows"
   ],
-  "content_security_policy": "script-src 'self'; object-src 'self';",
   "background": {
-    "scripts": ["index.js"]
+    "service_worker": "index.js",
+    "type": "module"
   },
-  "browser_action": {
+  "action": {
     "default_title": "__MSG_extensionName__",
     "default_icon": {
-      "16": "icons/light/logo-16.png",
-      "32": "icons/light/logo-32.png",
-      "64": "icons/light/logo-64.png"
-    },
-    "theme_icons": [
-      {
-        "light": "icons/dark/logo.svg",
-        "dark": "icons/light/logo.svg",
-        "size": 16
-      },
-      {
-        "light": "icons/dark/logo.svg",
-        "dark": "icons/light/logo.svg",
-        "size": 32
-      },
-      {
-        "light": "icons/dark/logo.svg",
-        "dark": "icons/light/logo.svg",
-        "size": 64
-      }
-    ],
-    "browser_style": false
+      "16": "icons/logo-16.png",
+      "32": "icons/logo-32.png",
+      "64": "icons/logo-64.png"
+    }
   },
-  "page_action": {
-    "default_title": "__MSG_stashThisTab__",
-    "default_icon": "icons/stash-one.svg",
-    "browser_style": false,
-    "show_matches": ["<all_urls>"]
-  },
-  "sidebar_action": {
-    "default_title": "__MSG_extensionName__",
-    "default_icon": {
-      "16": "icons/logo.svg",
-      "32": "icons/logo.svg",
-      "64": "icons/logo.svg"
-    },
-    "default_panel": "stash-list.html?view=sidebar",
-    "browser_style": false
+  "side_panel": {
+    "default_path": "sidepanel.html"
   },
   "options_ui": {
     "page": "options.html",
-    "browser_style": true
+    "open_in_tab": true
   },
   "commands": {
-    "_execute_browser_action": {
+    "_execute_action": {
       "suggested_key": {
-        "default": "Ctrl+Alt+T",
+        "default": "Alt+Shift+T",
         "mac": "MacCtrl+Shift+T"
       }
     },
-    "_execute_sidebar_action": {
+    "open-side-panel": {
       "suggested_key": {
-        "default": "Ctrl+Alt+S",
+        "default": "Alt+Shift+S",
         "mac": "MacCtrl+Shift+S"
-      }
-    },
-    "_execute_page_action": {
-      "suggested_key": {
-        "default": "Ctrl+Alt+W",
-        "mac": "MacCtrl+Shift+W"
-      }
+      },
+      "description": "__MSG_openSidePanelCommandDescription__"
     }
   }
 }
